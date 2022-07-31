@@ -7,10 +7,17 @@ vector<int> twoSum(vector<int> &numbers, int target)
     for (auto i = numbers.begin(); i != numbers.end(); i++)
     {
         auto j = i + 1;
-        auto found = find_if(j, numbers.end(), [i, target](int x)
-                             { return *i + x == target; });
-        if (found != numbers.end())
-            return {int(i - numbers.begin()) + 1, int(found - numbers.begin()) + 1};
+        if (*i != *j)
+        {
+            auto found = find_if(j, numbers.end(), [i, target](int x)
+                                 { return *i + x == target; });
+            if (found != numbers.end())
+                return {int(i - numbers.begin()) + 1, int(found - numbers.begin()) + 1};
+        }
+        else if (*i + *j == target)
+        {
+            return {int(i - numbers.begin()) + 1, int(j - numbers.begin()) + 1};
+        }
     }
     return {};
 }
