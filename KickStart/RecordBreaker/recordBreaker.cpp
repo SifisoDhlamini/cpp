@@ -1,11 +1,26 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
 using namespace std;
 
 int NumberOfRecordBreakingDays(int numberOfDays, vector<int> visitors) {
   // TODO: Complete this function to get the number of record breaking days
-  
+  int count = 0;
+  int largest = 0;
+  for (int i = 0; i < numberOfDays; i++)
+  {
+    if ((i == 0 && visitors[i] > largest) or (visitors[i] > largest)) {
+      if (visitors[i] > largest)
+      {
+        largest = visitors[i];
+      }
+      if ((i == numberOfDays - 1) or (i < numberOfDays - 1 && visitors[i] > visitors[i + 1]))
+      {
+        count++;
+      }
+    }
+  }
 
-  return 0;
+  return count;
 }
 
 int main() {
