@@ -1,82 +1,86 @@
 #include <iostream>
 #include <string>
 #include <utility>
-#include<algorithm>
-#include<vector>
-#include<set>
+#include <algorithm>
+#include <vector>
+#include <set>
 using namespace std;
 
-void west(set<pair<int, int>>& v, pair<int, int> &p)
+void west(set<pair<int, int>> &v, pair<int, int> &p)
 {
-    //check while position pair in vector == 1 move left
+    // check while position pair exists move left
+    while (v.find(p) != v.end())
+    {
+        --p.second;
+    }
+
+    v.insert(p);
+}
+
+void east(set<pair<int, int>> &v, pair<int, int> &p)
+{
+    // check while position pair exists move right
+    while (v.find(p) != v.end())
+    {
+        ++p.second;
+    }
+
+    v.insert(p);
+}
+
+void north(set<pair<int, int>> &v, pair<int, int> &p)
+{
+    // check while position pair exists move up
     while (v.find(p) != v.end())
     {
         --p.first;
     }
-
     v.insert(p);
 }
 
-void east(set<pair<int, int>>& v, pair<int, int> &p)
+void south(set<pair<int, int>> &v, pair<int, int> &p)
 {
-    //check while position pair in vector == 1 move right
+    // check while position pair exists move down
     while (v.find(p) != v.end())
     {
         ++p.first;
-    }
-
-    v.insert(p);
-}
-
-void north(set<pair<int, int>>& v, pair<int, int> &p)
-{
-    //check while position pair in vector == 1 move up
-    while (v.find(p) != v.end()){
-        --p.second;
-    }
-    v.insert(p);
-}
-
-void south(set<pair<int, int>>& v, pair<int, int> &p)
-{
-    //check while position pair in vector == 1 move down
-    while (v.find(p) != v.end()){
-        ++p.second;
     }
     v.insert(p);
 }
 
 pair<int, int> EndPosition(int N, int R, int C, int Sr, int Sc, string instructions)
 {
-    
+
     // TODO: implement this method to return the row and column where the robot
     // finishes.
-    set <pair<int, int>> v;
-    pair<int, int> p; 
+    set<pair<int, int>> v;
+    pair<int, int> p;
     if (instructions.length())
     {
         p = make_pair(Sr - 1, Sc - 1);
         v.insert(p);
+
         for (size_t i = 0; i < instructions.length(); i++)
         {
             if (instructions[i] == 'W')
             {
-                p.first--;
+                p.second--;
                 west(v, p);
+                ;
             }
             else if (instructions[i] == 'E')
             {
-                p.first++;
+                p.second++;
                 east(v, p);
             }
             else if (instructions[i] == 'N')
             {
-                p.second--;
+                p.first--;
                 north(v, p);
             }
             else if (instructions[i] == 'S')
             {
-                p.second++;
+                p.first++;
                 south(v, p);
             }
         }
