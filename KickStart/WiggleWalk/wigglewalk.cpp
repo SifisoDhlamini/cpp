@@ -4,90 +4,65 @@
 #include <algorithm>
 #include <vector>
 #include <set>
+#include <map>
+#include <list>
 using namespace std;
 
-void west(set<pair<int, int>> &v, pair<int, int> &p)
-{
-    // check while position pair exists move left
-    while (v.find(p) != v.end())
-    {
-        --p.second;
-    }
-
-    v.insert(p);
-}
-
-void east(set<pair<int, int>> &v, pair<int, int> &p)
-{
-    // check while position pair exists move right
-    while (v.find(p) != v.end())
-    {
-        ++p.second;
-    }
-
-    v.insert(p);
-}
-
-void north(set<pair<int, int>> &v, pair<int, int> &p)
-{
-    // check while position pair exists move up
-    while (v.find(p) != v.end())
-    {
-        --p.first;
-    }
-    v.insert(p);
-}
-
-void south(set<pair<int, int>> &v, pair<int, int> &p)
-{
-    // check while position pair exists move down
-    while (v.find(p) != v.end())
-    {
-        ++p.first;
-    }
-    v.insert(p);
-}
 
 pair<int, int> EndPosition(int N, int R, int C, int Sr, int Sc, string instructions)
 {
 
     // TODO: implement this method to return the row and column where the robot
     // finishes.
-    set<pair<int, int>> v;
+    //map represents the row and visited columns
+    map<int, set<int>> m;
     pair<int, int> p;
+    p = make_pair(Sr - 1, Sc - 1);
     if (instructions.length())
-    {
-        p = make_pair(Sr - 1, Sc - 1);
-        v.insert(p);
+    { 
+        m[p.first].insert(p.second);
 
         for (size_t i = 0; i < instructions.length(); i++)
         {
             if (instructions[i] == 'W')
             {
-                p.second--;
-                west(v, p);
-                ;
+                // check if the next column exists in the set
+                if (m[p.first].find(p.second - 1) == m[p.first].end())
+                {
+                    p.second--;
+                }
+                m[p.first].insert(p.second);
             }
             else if (instructions[i] == 'E')
             {
-                p.second++;
-                east(v, p);
+                // check if the next column exists in the set
+                if (m[p.first].find(p.second + 1) == m[p.first].end())
+                {
+                    p.second++;
+                }
+                m[p.first].insert(p.second);
             }
             else if (instructions[i] == 'N')
             {
-                p.first--;
-                north(v, p);
+                //check if the next row exists in the map
+                if (m.find(p.first - 1) == m.end())
+                {
+                    p.first--;
+                }
+                m[p.first].insert(p.second);
             }
             else if (instructions[i] == 'S')
             {
-                p.first++;
-                south(v, p);
+                //check if the next row exists in the map
+                if (m.find(p.first + 1) == m.end())
+                {
+                    p.first++;
+                }
+                m[p.first].insert(p.second);   
             }
         }
     }
 
-    // if (p.first == Sr && p.second == Sc)
-    //     return {Sr, Sc};
     return {p.first + 1, p.second + 1};
 }
 
