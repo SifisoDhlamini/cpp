@@ -37,7 +37,7 @@ pair<int, int> EndPosition(int N, int R, int C, int Sr, int Sc, string instructi
             else if (instructions[i] == 'E')
             {
                 // check if the next column exists in the set
-                if (m[p.first].find(p.second + 1) != m[p.first].end())
+                while (m[p.first].find(p.second + 1) != m[p.first].end())
                 {
                     p.second++;
                 }
@@ -47,7 +47,7 @@ pair<int, int> EndPosition(int N, int R, int C, int Sr, int Sc, string instructi
             else if (instructions[i] == 'N')
             {
                 //check if the next row exists in the map
-                if (m.find(p.first - 1) != m.end())
+                while (m[p.first - 1].find(p.second) != m[p.first - 1].end())
                 {
                     p.first--;
                 }
@@ -57,7 +57,7 @@ pair<int, int> EndPosition(int N, int R, int C, int Sr, int Sc, string instructi
             else if (instructions[i] == 'S')
             {
                 //check if the next row exists in the map
-                if (m.find(p.first + 1) != m.end())
+                while (m[p.first + 1].find(p.second) != m[p.first + 1].end())
                 {
                     p.first++;
                 }
