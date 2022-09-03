@@ -27,38 +27,42 @@ pair<int, int> EndPosition(int N, int R, int C, int Sr, int Sc, string instructi
             if (instructions[i] == 'W')
             {
                 // check if the next column exists in the set
-                if (m[p.first].find(p.second - 1) == m[p.first].end())
+                while (m[p.first].find(p.second - 1) != m[p.first].end())
                 {
                     p.second--;
                 }
-                m[p.first].insert(p.second);
+                m[p.first].insert(p.second - 1);
+                p.second--;
             }
             else if (instructions[i] == 'E')
             {
                 // check if the next column exists in the set
-                if (m[p.first].find(p.second + 1) == m[p.first].end())
+                if (m[p.first].find(p.second + 1) != m[p.first].end())
                 {
                     p.second++;
                 }
-                m[p.first].insert(p.second);
+                m[p.first].insert(p.second + 1);
+                p.second++;
             }
             else if (instructions[i] == 'N')
             {
                 //check if the next row exists in the map
-                if (m.find(p.first - 1) == m.end())
+                if (m.find(p.first - 1) != m.end())
                 {
                     p.first--;
                 }
-                m[p.first].insert(p.second);
+                m[p.first - 1].insert(p.second);
+                p.first--;
             }
             else if (instructions[i] == 'S')
             {
                 //check if the next row exists in the map
-                if (m.find(p.first + 1) == m.end())
+                if (m.find(p.first + 1) != m.end())
                 {
                     p.first++;
                 }
-                m[p.first].insert(p.second);   
+                m[p.first + 1].insert(p.second);
+                p.first++;
             }
         }
     }
